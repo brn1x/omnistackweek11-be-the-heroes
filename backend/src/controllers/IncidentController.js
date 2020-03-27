@@ -47,11 +47,18 @@ module.exports = {
       .first()
 
     if(!incident) {
-      return res.status(404).json({ Error: 'Content not found' })
+      return res.status(404).json({ 
+        statusCode: 404,
+        error: 'Content not found',
+      })
     }
 
     if(incident.ong_id !== ong_id) {
-      return res.status(401).json({ Error: 'Operation not permited' })
+      return res.status(401).json({ 
+        statusCode: 401,
+        error: 'Unauthorized',
+        message: 'Operation not permited'
+      })
     }
 
     await connection('incidents').where('id', id).delete()
